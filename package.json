@@ -15,9 +15,11 @@
   "type": "module",
   "main": "app.js",
   "scripts": {
+    "dev": "(npm run type-check || true) && npm run build && npm run http",
     "build": "./node_modules/.bin/tsx src/build/start.ts",
     "http": "./node_modules/.bin/http-server ./dist/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "type-check": "./node_modules/.bin/tsc --noEmit",
+    "watch": "./node_modules/.bin/nodemon"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.12",
@@ -26,6 +28,7 @@
     "@types/node": "26.4.1",
     "esbuild": "0.28.2",
     "http-server": "14.1.1",
+    "nodemon": "3.1.14",
     "tsx": "4.23.13",
     "typescript": "5.9.3"
   },

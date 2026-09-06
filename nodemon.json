@@ -1,0 +1,7 @@
+﻿{
+  "watch": ["src"],
+  "ignore": [],
+  "ext": "ts,css,ico,jpg,png,webp",
+  "exec": "npm run dev",
+  "verbose": true
+}
