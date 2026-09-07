@@ -1,7 +1,12 @@
 ﻿import type { Attributes, ChildElement } from "./x-element.js";
 import { xElement } from "./x-element.js";
 
-// Block elements
+export const button = (
+  attributes: Attributes,
+  children: ChildElement[],
+): HTMLButtonElement => {
+  return xElement("button", attributes, children) as HTMLButtonElement;
+};
 
 export const div = (
   attributes: Attributes,
@@ -16,8 +21,6 @@ export const p = (
 ): HTMLParagraphElement => {
   return xElement("p", attributes, children) as HTMLParagraphElement;
 };
-
-// Head elements
 
 export const h1 = (
   attributes: Attributes,

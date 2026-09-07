@@ -1,0 +1,33 @@
+﻿@import "vars.css";
+
+.toolbar {
+  width: 100%;
+  height: var(--toolbar-height);
+  margin: 0;
+  padding: 0;
+  background: var(--button-face);
+}
+
+.toolbar button {
+  width: auto;
+  height: 100%;
+  margin: 0;
+  padding: 0.8rem;
+  border: 0.05rem solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--button-text);
+}
+.toolbar button:hover {
+  background: var(--button-hover);
+  border: 0.05rem solid var(--button-hover-border);
+}
+.toolbar button:active {
+  background: var(--button-active);
+}
+.toolbar button:disabled {
+  background: none;
+  border: none;
+  color: var(--text-disabled);
+  text-shadow: 1px 1px 0 var(--text-disabled-shdow);
+}

@@ -1,0 +1,11 @@
+﻿:root {
+  --toolbar-height: 48px;
+  /* colors */
+  --button-face: ButtonFace;
+  --button-text: ButtonText;
+  --button-hover: color-mix(var(--button-face), black 10%);
+  --button-hover-border: color-mix(var(--button-face), black 20%);
+  --button-active: color-mix(var(--button-hover), black 10%);
+  --text-disabled: color-mix(var(--button-face), black 20%);
+  --text-disabled-shdow: Window;
+}
