@@ -73,14 +73,23 @@ const buildApp = async (appDir: string): Promise<void> => {
       throw error;
     }
   });
-  // build JS
+  // build JS and CSS
+  const rnd = Math.random().toString(36).substring(2, 15);
   const entryFile = `${resolve(APPS, appDir, APP_FILE_NAME)}.ts`;
-  const outFile = `${resolve(DIST, appDir, APP_FILE_NAME)}.js`;
+  const outFile = `${resolve(DIST, appDir, APP_FILE_NAME)}-${rnd}.js`;
   try {
     await access(entryFile);
     await buildBrowserJs(entryFile, outFile);
   } catch (_error: unknown) {
     logger.error(`No application entry point found: "${entryFile}"`);
+  }
+
+  let cssTag = "";
+  try {
+    await access(resolve(DIST, appDir, `${APP_FILE_NAME}-${rnd}.css`));
+    cssTag = `<link rel="stylesheet" href="./${APP_FILE_NAME}-${rnd}.css">`;
+  } catch (_error: unknown) {
+    logger.info(`No CSS found in ${appDir}`);
   }
 
   // create index.html
@@ -90,7 +99,7 @@ const buildApp = async (appDir: string): Promise<void> => {
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<script src="./${APP_FILE_NAME}.js"></script>
+<script src="./${APP_FILE_NAME}-${rnd}.js"></script>${cssTag}
 </head>
 <body></body>
 </html>`,
