@@ -1,5 +1,5 @@
 ﻿import { div } from "../../../shared/x-element/markup.js";
-import { hddMap } from "./hddMap.js";
+import { hddMap } from "./hdd-map.js";
 import { toolbar } from "./toolbar.js";
 import "./main-window.css";
 

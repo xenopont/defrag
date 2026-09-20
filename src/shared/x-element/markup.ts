@@ -8,6 +8,13 @@ export const button = (
   return xElement("button", attributes, children) as HTMLButtonElement;
 };
 
+export const canvas = (
+  attributes: Attributes,
+  children: ChildElement[],
+): HTMLCanvasElement => {
+  return xElement("canvas", attributes, children) as HTMLCanvasElement;
+};
+
 export const div = (
   attributes: Attributes,
   children: ChildElement[],
