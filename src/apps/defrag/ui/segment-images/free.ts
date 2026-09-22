@@ -1,11 +1,6 @@
-﻿export const freeSegmentImage: ImageData = new ImageData(
-  new Uint8ClampedArray([
-    73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73,
-    73, 73, 73, 255, 255,
-  ]),
-  24,
-  24,
-  {
-    colorSpace: "srgb",
-  },
+﻿import { buildImageData } from "./paint.js";
+
+export const freeSegmentImage: ImageData = buildImageData(
+  { r: 255, g: 255, b: 255 },
+  { r: 196, g: 196, b: 196 },
 );
