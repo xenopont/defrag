@@ -24,6 +24,8 @@ each cell is represented by 3 integers 0..255
 
 // set this one for all the colored segments: 8..64
 const segmentSize: number = 24;
+const NUMS_PER_PIXEL = 3;
+const SEGMENT_SPAN = 2;
 
 type TColor = { r: number; g: number; b: number };
 
@@ -51,28 +53,50 @@ export const buildImageData = (
   const s = compressSize(segmentSize);
   const c = compressColor(color);
   const b = compressColor(border);
-  const bkgrnd = compressColor(background);
+  const bg = compressColor(background);
 
-  // 3 color components per pixel
-  const rowLength = s * 3;
+  const rowLength = s * NUMS_PER_PIXEL;
   const totalLength = rowLength * s;
   const imageData = new Uint8ClampedArray(totalLength);
 
-  // border rows
-  const borderLength = rowLength - 6;
-  const bottomStart = totalLength - rowLength * 3;
-  for (let i = 0; i < borderLength; i = i + 3) {
-    // top border
-    imageData[i] = b.r;
-    imageData[i + 1] = b.g;
-    imageData[i + 2] = b.b;
-    // bottom border
-    imageData[bottomStart + i] = b.r;
-    imageData[bottomStart + i + 1] = b.g;
-    imageData[bottomStart + i + 2] = b.b;
+  for (let row = 0; row < s; row++) {
+    for (let col = 0; col < s * NUMS_PER_PIXEL; col = col + 3) {
+      const index = rowLength * row + col;
+      // top border & bottom border
+      if (row === 0 || row === s - SEGMENT_SPAN - 1) {
+        // span
+        if (col >= rowLength - SEGMENT_SPAN * NUMS_PER_PIXEL) {
+          imageData[index] = bg.r;
+          imageData[index + 1] = bg.g;
+          imageData[index + 2] = bg.b;
+          continue;
+        }
+        // border otherwise
+        imageData[index] = b.r;
+        imageData[index + 1] = b.g;
+        imageData[index + 2] = b.b;
+        continue;
+      }
+      // bottom span
+      if (row >= s - SEGMENT_SPAN) {
+        imageData[index] = bg.r;
+        imageData[index + 1] = bg.g;
+        imageData[index + 2] = bg.b;
+        continue;
+      }
+      // segment's border
+      if (col === 0 || col === s - SEGMENT_SPAN - 1) {
+        imageData[index] = b.r;
+        imageData[index + 1] = b.g;
+        imageData[index + 2] = b.b;
+        continue;
+      }
+      // segment itself otherwise
+      imageData[index] = c.r;
+      imageData[index + 1] = c.g;
+      imageData[index + 2] = c.b;
+    }
   }
-  // main color
-  for (let i = 3; i < )
 
   return imageData;
 };
