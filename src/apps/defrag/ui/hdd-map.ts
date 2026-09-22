@@ -1,7 +1,11 @@
 ﻿import { canvas, div } from "../../../shared/x-element/markup.js";
 import "./hdd-map.css";
-
-const SEGMENT_SIZE_PX = 8;
+import { defragmentedSegmentImage } from "./segment-images/defragmented.js";
+import { fragmentedSegmentImage } from "./segment-images/fragmented.js";
+import { freeSegmentImage } from "./segment-images/free.js";
+import { readSegmentImage } from "./segment-images/read.js";
+import { systemSegmentImage } from "./segment-images/system.js";
+import { writeSegmentImage } from "./segment-images/write.js";
 
 const onHddMapInit = (map: HTMLDivElement): void => {
   const width = map.scrollWidth;
@@ -25,12 +29,17 @@ enum TSegmentType {
   WRITE,
 }
 
-type TSegmentImageMap = {
+type TSegmentImageDictionary = {
   [k in TSegmentType]: ImageData;
 };
 
-const segmentImageMap: TSegmentType = {
-  //
+const segmentImageDictionary: TSegmentImageDictionary = {
+  [TSegmentType.FREE]: freeSegmentImage,
+  [TSegmentType.FRAGMENTED]: fragmentedSegmentImage,
+  [TSegmentType.DEFRAGMENTED]: defragmentedSegmentImage,
+  [TSegmentType.SYSTEM]: systemSegmentImage,
+  [TSegmentType.READ]: readSegmentImage,
+  [TSegmentType.WRITE]: writeSegmentImage,
 };
 
 export const drawSegment = (c: HTMLCanvasElement): void => {
