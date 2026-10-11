@@ -18,28 +18,31 @@ We are going to produce the following square image
 ▫▫▫▫▫▫▫▫▫▫▫▫
 ▫▫▫▫▫▫▫▫▫▫▫▫
 
-each cell is represented by 3 integers 0..255
+each cell is represented by 4 integers 0..255: rgba
 
 */
 
 // set this one for all the colored segments: 8..64
 const segmentSize: number = 24;
-const NUMS_PER_PIXEL = 3;
+const NUMS_PER_PIXEL = 4;
 const SEGMENT_SPAN = 2;
 
-type TColor = { r: number; g: number; b: number };
+type TColor = { r: number; g: number; b: number; a: number };
 
 const compressColorComponent = (c: number): number => {
   // integer, not greater than 255, not less than 0
   return Math.max(Math.min(Math.floor(c), 255), 0);
 };
+
 const compressColor = (color: TColor): TColor => {
   return {
     r: compressColorComponent(color.r),
     g: compressColorComponent(color.g),
     b: compressColorComponent(color.b),
+    a: compressColorComponent(color.a),
   };
 };
+
 const compressSize = (size: number): number => {
   // integer, not greater than 64, not less than 8
   return Math.max(Math.min(Math.floor(size), 64), 8);
@@ -48,7 +51,7 @@ const compressSize = (size: number): number => {
 export const buildImageData = (
   color: TColor,
   border: TColor,
-  background: TColor = { r: 255, g: 255, b: 255 },
+  background: TColor = { r: 255, g: 255, b: 255, a: 255 },
 ): ImageData => {
   const s = compressSize(segmentSize);
   const c = compressColor(color);
@@ -69,12 +72,14 @@ export const buildImageData = (
           pixelData[index] = bg.r;
           pixelData[index + 1] = bg.g;
           pixelData[index + 2] = bg.b;
+          pixelData[index + 3] = bg.a;
           continue;
         }
         // border otherwise
         pixelData[index] = b.r;
         pixelData[index + 1] = b.g;
         pixelData[index + 2] = b.b;
+        pixelData[index + 3] = b.a;
         continue;
       }
       // bottom span
@@ -82,6 +87,7 @@ export const buildImageData = (
         pixelData[index] = bg.r;
         pixelData[index + 1] = bg.g;
         pixelData[index + 2] = bg.b;
+        pixelData[index + 3] = bg.a;
         continue;
       }
       // segment's border
@@ -89,12 +95,14 @@ export const buildImageData = (
         pixelData[index] = b.r;
         pixelData[index + 1] = b.g;
         pixelData[index + 2] = b.b;
+        pixelData[index + 3] = b.a;
         continue;
       }
       // segment itself otherwise
       pixelData[index] = c.r;
       pixelData[index + 1] = c.g;
       pixelData[index + 2] = c.b;
+      pixelData[index + 3] = c.a;
     }
   }
 
