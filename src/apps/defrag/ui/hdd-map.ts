@@ -16,6 +16,7 @@ const onHddMapInit = (map: HTMLDivElement): void => {
 
 export const hddMap = (): HTMLDivElement => {
   const map = div({ class: "hdd-map", id: "hdd-map" }, []);
+  // timeout is required to let the elements get their dimensions
   setTimeout(() => onHddMapInit(map), 1);
   return map;
 };
@@ -42,6 +43,6 @@ const segmentImageDictionary: TSegmentImageDictionary = {
   [TSegmentType.WRITE]: writeSegmentImage,
 };
 
-export const drawSegment = (c: HTMLCanvasElement): void => {
+export const drawSegment = (ctx: CanvasRenderingContext2D): void => {
   //
 };
