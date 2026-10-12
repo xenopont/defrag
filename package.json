@@ -22,17 +22,21 @@
     "watch": "./node_modules/.bin/nodemon"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.12",
+    "@biomejs/biome": "2.5.15",
     "@tsconfig/node24": "24.0.5",
     "@tsconfig/strictest": "2.0.8",
-    "@types/node": "26.4.1",
+    "@types/node": "26.6.5",
     "esbuild": "0.28.2",
     "http-server": "14.1.1",
-    "nodemon": "3.1.14",
-    "tsx": "4.23.13",
+    "nodemon": "1.19.4",
+    "tsx": "4.23.15",
     "typescript": "5.9.3"
   },
   "allowScripts": {
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "nodemon@1.19.4": true
+  },
+  "dependencies": {
+    "prune": "^0.0.2"
   }
 }
