@@ -23,7 +23,7 @@ each cell is represented by 4 integers 0..255: rgba
 */
 
 // set this one for all the colored segments: 8..64
-const segmentSize: number = 24;
+export const segmentSize: number = 16;
 const NUMS_PER_PIXEL = 4;
 const SEGMENT_SPAN = 2;
 
@@ -45,7 +45,7 @@ const compressColor = (color: TColor): TColor => {
 
 const compressSize = (size: number): number => {
   // integer, not greater than 64, not less than 8
-  return Math.max(Math.min(Math.floor(size), 64), 8);
+  return Math.floor(Math.max(Math.min(Math.floor(size), 64), 8));
 };
 
 export const buildImageData = (
@@ -63,7 +63,7 @@ export const buildImageData = (
   const pixelData = new Uint8ClampedArray(totalLength);
 
   for (let row = 0; row < s; row++) {
-    for (let col = 0; col < s * NUMS_PER_PIXEL; col = col + 3) {
+    for (let col = 0; col < s * NUMS_PER_PIXEL; col = col + NUMS_PER_PIXEL) {
       const index = rowLength * row + col;
       // top border & bottom border
       if (row === 0 || row === s - SEGMENT_SPAN - 1) {
@@ -91,11 +91,18 @@ export const buildImageData = (
         continue;
       }
       // segment's border
-      if (col === 0 || col === s - SEGMENT_SPAN - 1) {
+      if (col === 0 || col === (s - SEGMENT_SPAN - 1) * NUMS_PER_PIXEL) {
         pixelData[index] = b.r;
         pixelData[index + 1] = b.g;
         pixelData[index + 2] = b.b;
         pixelData[index + 3] = b.a;
+        continue;
+      }
+      if (col > (s - SEGMENT_SPAN - 1) * NUMS_PER_PIXEL) {
+        pixelData[index] = bg.r;
+        pixelData[index + 1] = bg.g;
+        pixelData[index + 2] = bg.b;
+        pixelData[index + 3] = bg.a;
         continue;
       }
       // segment itself otherwise
